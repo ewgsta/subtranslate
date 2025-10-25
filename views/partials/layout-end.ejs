@@ -1,0 +1,22 @@
+      </main>
+      <%
+        const chromeHiddenEnd =
+          typeof hideChrome === 'boolean'
+            ? hideChrome
+            : false;
+      %>
+      <% if (!chromeHiddenEnd) { %>
+      <%- include('footer') %>
+      <% } %>
+    </div>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="/scripts/theme.js" defer></script>
+    <script src="/scripts/app.js" defer></script>
+    <% if (Array.isArray(extraScripts)) { extraScripts.forEach(function (src) { %>
+    <script src="<%= src %>" defer></script>
+    <% }) } %>
+    <% if (typeof inlineScripts !== "undefined") { %>
+    <%- inlineScripts %>
+    <% } %>
+  </body>
+</html>

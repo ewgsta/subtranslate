@@ -1,0 +1,114 @@
+<header class="site-header">
+  <nav class="navbar glass-panel">
+    <a class="brand" href="/">
+      <span class="brand-icon" aria-hidden="true">
+        <i data-lucide="sparkles"></i>
+      </span>
+      <span class="brand-name">SubTranslate</span>
+    </a>
+    <div class="nav-links" role="navigation">
+      <a class="nav-link <%= activePath === '/' ? 'is-active' : '' %>" href="/">
+        Ana sayfa
+      </a>
+    </div>
+    <% const currentTheme = (typeof theme === 'string' ? theme : 'system'); %>
+    <div class="nav-actions">
+      <div
+        class="status-pill <%= turnstileVerified ? 'status-pill--success' : 'status-pill--warning' %>"
+      >
+        <span class="status-dot"></span>
+        <span>
+          <%= turnstileVerified ? "Dogrulama aktif" : "Dogrulama gerekli" %>
+        </span>
+      </div>
+      <div class="theme-selector" data-theme-selector>
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="theme-toggle__stack">
+            <span class="theme-toggle__icon" data-theme-active-icon>
+              <i data-lucide="<%= currentTheme === 'light' ? 'sun' : currentTheme === 'dark' ? 'moon-star' : 'monitor' %>"></i>
+            </span>
+            <span class="theme-toggle__text">
+              <span class="theme-toggle__label" data-theme-active-label>
+                <%= currentTheme === 'light' ? 'Aydinlik' : currentTheme === 'dark' ? 'Koyu' : 'Sistem' %>
+              </span>
+            </span>
+          </span>
+          <span class="theme-toggle__chevron" aria-hidden="true">
+            <i data-lucide="chevron-down"></i>
+          </span>
+        </button>
+        <ul class="theme-menu" data-theme-menu role="menu" aria-label="Tema seçimi">
+          <li>
+            <button
+              class="theme-option <%= currentTheme === 'system' ? 'is-active' : '' %>"
+              type="button"
+              role="menuitemradio"
+              aria-checked="<%= currentTheme === 'system' ? 'true' : 'false' %>"
+              data-theme-option="system"
+            >
+              <span class="theme-option__icon">
+                <i data-lucide="monitor"></i>
+              </span>
+              <span class="theme-option__label">
+                <span class="theme-option__title">Sistem</span>
+                <span class="theme-option__subtitle">Cihaz tercihini kullan</span>
+              </span>
+              <span class="theme-option__check" aria-hidden="true">
+                <i data-lucide="check"></i>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="theme-option <%= currentTheme === 'light' ? 'is-active' : '' %>"
+              type="button"
+              role="menuitemradio"
+              aria-checked="<%= currentTheme === 'light' ? 'true' : 'false' %>"
+              data-theme-option="light"
+            >
+              <span class="theme-option__icon">
+                <i data-lucide="sun"></i>
+              </span>
+              <span class="theme-option__label">
+                <span class="theme-option__title">Aydinlik</span>
+                <span class="theme-option__subtitle">Cam efektli parlak tema</span>
+              </span>
+              <span class="theme-option__check" aria-hidden="true">
+                <i data-lucide="check"></i>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="theme-option <%= currentTheme === 'dark' ? 'is-active' : '' %>"
+              type="button"
+              role="menuitemradio"
+              aria-checked="<%= currentTheme === 'dark' ? 'true' : 'false' %>"
+              data-theme-option="dark"
+            >
+              <span class="theme-option__icon">
+                <i data-lucide="moon-star"></i>
+              </span>
+              <span class="theme-option__label">
+                <span class="theme-option__title">Koyu</span>
+                <span class="theme-option__subtitle">Derin mor tonlara sahip tema</span>
+              </span>
+              <span class="theme-option__check" aria-hidden="true">
+                <i data-lucide="check"></i>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <button class="primary-link primary-link--lg" type="button" data-open-auth-modal>
+        Hemen dene
+      </button>
+    </div>
+  </nav>
+</header>

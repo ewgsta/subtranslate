@@ -1,0 +1,24 @@
+<%- include('../partials/layout-start', {
+  title,
+  description,
+  theme,
+  activePath,
+  turnstileVerified: typeof turnstileVerified === 'boolean'
+    ? turnstileVerified
+    : false
+}) %>
+  <section class="error-page glass-panel">
+    <span class="error-code">500</span>
+    <h1>Bir seyler ters gitti.</h1>
+    <p>
+      Teknik ekibimiz durumu inceliyor. Lutfen kisa bir sure sonra tekrar
+      deneyin veya destek ekibimizle iletisime gecin.
+    </p>
+    <div class="error-actions">
+      <a class="primary-button" href="/">Ana sayfaya don</a>
+      <button class="secondary-button" type="button" onclick="window.location.reload()">
+        Sayfayi yenile
+      </button>
+    </div>
+  </section>
+<%- include('../partials/layout-end', { extraScripts: [] }) %>

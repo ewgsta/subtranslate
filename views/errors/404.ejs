@@ -1,0 +1,22 @@
+<%- include('../partials/layout-start', {
+  title,
+  description,
+  theme,
+  activePath,
+  turnstileVerified: typeof turnstileVerified === 'boolean'
+    ? turnstileVerified
+    : false
+}) %>
+  <section class="error-page glass-panel">
+    <span class="error-code">404</span>
+    <h1>Aradiginiz sayfa kaybolmus olabilir.</h1>
+    <p>
+      Baglantiyi kontrol edin veya asagidaki seceneklerden biriyle SubTranslate'e
+      geri donun.
+    </p>
+    <div class="error-actions">
+      <a class="primary-button" href="/">Ana sayfaya don</a>
+      <a class="secondary-button" href="/security">Guvenlik merkezine git</a>
+    </div>
+  </section>
+<%- include('../partials/layout-end', { extraScripts: [] }) %>

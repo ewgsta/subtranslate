@@ -1,0 +1,187 @@
+<%- include('../partials/layout-start', {
+  title,
+  description,
+  theme,
+  activePath,
+  turnstileVerified
+}) %>
+  <section class="hero glass-panel hero--lifted" id="get-started">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge__icon" aria-hidden="true">
+          <i data-lucide="sparkles"></i>
+        </span>
+        <span class="hero-badge__title">SubTranslate</span>
+        <span class="hero-badge__tag">BETA</span>
+      </div>
+      <h1 class="hero-title">
+        Altyazilarinizi <span class="highlight">aninda cevirin</span>,
+        yapay zeka ile yayinlayin.
+      </h1>
+      <p class="hero-subtitle">
+        Zamandan tasarruf edin, cam efektli modern arayuz ile farkli dillerde
+        altyazi uretimini kolaylastirin.
+      </p>
+      <div class="hero-actions">
+        <button class="primary-button primary-button--xl" type="button" data-open-auth-modal>
+          <span class="button-icon">
+            <i data-lucide="rocket"></i>
+          </span>
+          Hemen dene
+        </button>
+        <button class="secondary-button" type="button">
+          <span class="button-icon">
+            <i data-lucide="play-circle"></i>
+          </span>
+          Canli demoyu izle
+        </button>
+      </div>
+    </div>
+    <form class="hero-form glass-panel" autocomplete="off">
+      <label class="input-label" for="video-url">Video baglantisi</label>
+      <div class="input-group">
+        <input
+          id="video-url"
+          name="video-url"
+          type="url"
+          placeholder="https://ornek.video/sub"
+          required
+        />
+        <button type="submit" class="primary-button">Analiz et</button>
+      </div>
+      <label class="input-label" for="notes">Aciklama</label>
+      <textarea
+        id="notes"
+        name="notes"
+        rows="3"
+        placeholder="Orn: Ingilizceden Turkceye cevir, teknik terimler korunsun."
+      ></textarea>
+      <p class="form-hint">
+        * SubTranslate, ilk kullaniminizda Turnstile dogrulamasi ile oturumunuzu
+        korur.
+      </p>
+    </form>
+  </section>
+
+  <section class="feature-section">
+    <h2 class="section-title">Neden SubTranslate?</h2>
+    <div class="feature-grid">
+      <% featureHighlights.forEach(function (feature) { %>
+      <article class="feature-card glass-panel">
+        <div class="feature-icon">
+          <span class="feature-icon__bubble">
+            <i data-lucide="<%= feature.icon %>"></i>
+          </span>
+        </div>
+        <h3><%= feature.title %></h3>
+        <p><%= feature.description %></p>
+      </article>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="workflow-section glass-panel" id="workflow">
+    <div class="workflow-header">
+      <div>
+        <h2 class="section-title">Akilli is akisi</h2>
+        <p class="section-subtitle">
+          Uclu adimla altyazi cevirilerinizi standardize edin, ekiplerinizle
+          paylasin.
+        </p>
+      </div>
+      <a class="chip-link" href="/security">
+        <span class="chip-link__icon" aria-hidden="true">
+          <i data-lucide="shield-check"></i>
+        </span>
+        Guvenlik ilkeleri
+      </a>
+    </div>
+    <ol class="workflow-list">
+      <% workflowSteps.forEach(function (step, index) { %>
+      <li class="workflow-item">
+        <div class="workflow-meta">
+          <span class="workflow-index"><%= index + 1 %></span>
+          <span class="workflow-icon">
+            <i data-lucide="<%= step.icon %>"></i>
+          </span>
+        </div>
+        <div>
+          <h3><%= step.step %></h3>
+          <p><%= step.description %></p>
+        </div>
+      </li>
+      <% }) %>
+    </ol>
+  </section>
+
+  <section class="cta-section glass-panel" id="pricing">
+    <div>
+      <h2 class="section-title">Profesyonel planlar</h2>
+      <p class="section-subtitle">
+        Aylik 100 dakika otomatik ceviri, ekip yonetimi ve AI destekli duzeltme
+        ozellikleri ile baslar.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <button class="primary-button" type="button">
+        <span class="button-icon">
+          <i data-lucide="layers"></i>
+        </span>
+        Planlari incele
+      </button>
+      <button class="secondary-button" type="button">
+        <span class="button-icon">
+          <i data-lucide="messages-square"></i>
+        </span>
+        Satis ekibiyle gorus
+      </button>
+    </div>
+  </section>
+
+  <div class="modal is-hidden" data-auth-modal>
+    <div class="modal-backdrop" data-close-auth-modal></div>
+    <div class="modal-panel glass-panel" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+      <button class="modal-close" type="button" data-close-auth-modal aria-label="Kapat">
+        <i data-lucide="x"></i>
+      </button>
+      <header class="modal-header">
+        <i data-lucide="sparkles"></i>
+        <div>
+          <p class="modal-eyebrow">SubTranslate</p>
+          <h2 id="auth-modal-title">Hemen baslayin</h2>
+        </div>
+      </header>
+      <div class="modal-content">
+        <form class="auth-tabs" data-auth-tabs>
+          <div class="tabs-list" role="tablist">
+            <button class="tab-button is-active" type="button" role="tab" data-auth-tab="login">
+              Giris yap
+            </button>
+            <button class="tab-button" type="button" role="tab" data-auth-tab="register">
+              Kayit ol
+            </button>
+          </div>
+          <div class="tab-panel is-active" data-auth-panel="login" role="tabpanel">
+            <label class="input-label" for="login-email">E-posta</label>
+            <input id="login-email" type="email" placeholder="sizin@domain.com" required />
+            <label class="input-label" for="login-password">Sifre</label>
+            <input id="login-password" type="password" placeholder="********" required />
+            <button class="primary-button" type="submit">Giris yap</button>
+          </div>
+          <div class="tab-panel" data-auth-panel="register" role="tabpanel" aria-hidden="true">
+            <label class="input-label" for="register-name">Ad Soyad</label>
+            <input id="register-name" type="text" placeholder="Adiniz" required />
+            <label class="input-label" for="register-email">E-posta</label>
+            <input id="register-email" type="email" placeholder="sizin@domain.com" required />
+            <label class="input-label" for="register-password">Sifre</label>
+            <input id="register-password" type="password" placeholder="En az 8 karakter" required />
+            <button class="primary-button" type="submit">Hesap olustur</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<%- include('../partials/layout-end', {
+  extraScripts: [],
+  inlineScripts: ""
+}) %>

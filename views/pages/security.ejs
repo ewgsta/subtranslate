@@ -1,0 +1,120 @@
+<%- include('../partials/layout-start', {
+  title,
+  description,
+  theme,
+  activePath,
+  turnstileVerified,
+  hideChrome: true
+}) %>
+  <section class="security-gate glass-panel">
+    <div class="security-gate__header">
+      <span class="security-gate__icon">
+        <i data-lucide="<%= turnstileVerified ? 'badge-check' : 'shield-check' %>"></i>
+      </span>
+      <div>
+        <p class="security-gate__eyebrow">Guvenlik</p>
+        <h1>Cloudflare Turnstile dogrulamasi</h1>
+      </div>
+    </div>
+    <p class="security-gate__description">
+      Oturumunuzu korumak icin kisacik bir dogrulama adimina ihtiyacimiz var.
+      Dogrulama tamamlanir tamamlanmaz ilgili sayfaya otomatik olarak geri
+      yonlendirileceksiniz.
+    </p>
+
+    <% if (!turnstileVerified) { %>
+    <form class="security-gate__form" data-turnstile-form>
+      <input type="hidden" name="redirect" value="<%= redirectPath %>" />
+      <div
+        id="turnstile-widget"
+        class="cf-turnstile security-gate__widget"
+        data-sitekey="<%= turnstileSiteKey %>"
+        data-callback="onTurnstileSecuritySuccess"
+        data-action="security"
+        data-theme="auto"
+      ></div>
+      <p class="security-gate__status" data-turnstile-status>
+        Dogrulama bekleniyor...
+      </p>
+    </form>
+    <% } else { %>
+    <div class="security-gate__success">
+      <i data-lucide="check-circle-2"></i>
+      <div>
+        <h2>Oturum dogrulandi</h2>
+        <p>
+          Son 1 saat icinde Turnstile dogrulamasini tamamladiniz. Devam etmek icin
+          asagidaki dugmeyi kullanin.
+        </p>
+      </div>
+      <a class="primary-button" href="<%= redirectPath || '/' %>">
+        Devam et
+      </a>
+    </div>
+    <% } %>
+
+    <div class="security-gate__ray">
+      <span>Ray ID</span>
+      <code><%= rayId %></code>
+    </div>
+  </section>
+<%
+  const extraScripts = !turnstileVerified
+    ? ["https://challenges.cloudflare.com/turnstile/v0/api.js"]
+    : [];
+  const inlineScripts = !turnstileVerified
+    ? `
+    <script>
+      (function () {
+        const statusEl = document.querySelector("[data-turnstile-status]");
+        const formEl = document.querySelector("[data-turnstile-form]");
+
+        async function verify(token) {
+          if (!token || !formEl) {
+            return;
+          }
+
+          statusEl.textContent = "Dogrulama kontrol ediliyor...";
+
+          const payload = new FormData(formEl);
+          payload.append("token", token);
+
+          try {
+            const response = await fetch("/verify-turnstile", {
+              method: "POST",
+              body: JSON.stringify({
+                token: token,
+                redirect: payload.get("redirect")
+              }),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+              statusEl.textContent = data.message || "Dogrulama basarisiz. Tekrar deneyin.";
+              setTimeout(() => {
+                window.turnstile && window.turnstile.reset();
+              }, 1200);
+              return;
+            }
+
+            statusEl.textContent = "Dogrulama tamamlandi. Yonlendiriliyorsunuz...";
+            setTimeout(() => {
+              window.location.href = data.redirect || "/";
+            }, 500);
+          } catch (error) {
+            console.error("Turnstile dogrulama hatasi:", error);
+            statusEl.textContent = "Sunucuya baglanti saglanamadi. Lutfen sayfayi yenileyin.";
+          }
+        }
+
+        window.onTurnstileSecuritySuccess = verify;
+      })();
+    </script>
+  `
+    : "";
+%>
+<%- include('../partials/layout-end', { extraScripts, inlineScripts, hideChrome: true }) %>
